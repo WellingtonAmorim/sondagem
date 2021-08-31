@@ -14,7 +14,7 @@ Bibliotecas de python necessárias:
 
 Instalar as bibliotecas:
 ```
-$pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org -r requirements.txt
+pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org -r requirements.txt
 ```
 
 ## Contribuidores<br>
