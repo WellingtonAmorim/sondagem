@@ -1,18 +1,21 @@
 ## Sondagem
+"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
-## ☕ Selecione o README que deseja usar
+## Requisitos
 
-[![PERFIL](https://img.shields.io/badge/perfil%20-%23323330.svg?&style=for-the-badge&logo=perfil&logoColor=black&color=FF0080)](https://github.com/iuricode/README-template/tree/main/README-profile)
-[![REPOSITÓRIO](https://img.shields.io/badge/repositório%20-%23323330.svg?&style=for-the-badge&logo=repositório&logoColor=black&color=8000FF)](https://github.com/iuricode/README-template/blob/main/README-repository/iuricode.md)
+python 3
+
+Bibliotecas de python necessárias:
+* pandas
+* selenium
 
 
-## 🥳 Recursos para os READMEs
+## Installation
 
-[![CARDS ESTRELAS](https://img.shields.io/badge/cards%20estrelas%20-%23323330.svg?&style=for-the-badge&logo=cards%20estrelas&logoColor=black&color=FFFF00)](https://github.com/iuricode/README-template/blob/main/README-cards-stars/cards-stars.md)
-[![Badges](https://img.shields.io/badge/badges%20-%23323330.svg?&style=for-the-badge&logo=badges&logoColor=black&color=0000FF)](https://github.com/iuricode/README-template/blob/main/badges/badges.md)
-
----
-
+Instalar as bibliotecas:
+```
+$pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org -r requirements.txt
+```
 
 ## 🌈 Contribuidores<br>
 
@@ -20,34 +23,24 @@
   <tr>
     <td align="center">
       <a href="#">
-        <img src="https://avatars3.githubusercontent.com/u/31936044" width="100px;" alt="Foto do Iuri Silva no GitHub"/><br>
+        <img src="https://avatars3.githubusercontent.com/u/31936044" width="100px;" alt="Foto do Caio Hatanaka"/><br>
         <sub>
-          <b>Iuri Silva</b>
+          <b>Caio Matheus Hatanaka</b>
         </sub>
       </a>
     </td>
     <td align="center">
       <a href="#">
-        <img src="https://avatars1.githubusercontent.com/u/43486606" width="100px;" alt="Foto do Marcelo Santos"/><br>
+        <img src="https://avatars1.githubusercontent.com/u/43486606" width="100px;" alt="Foto do Winicius Sabino"/><br>
         <sub>
-          <b>Marcelo Santos</b>
-        </sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="#">
-        <img src="https://avatars0.githubusercontent.com/u/57146734" width="100px;" alt="Foto da Vanessa Swerts"/><br>
-        <sub>
-          <b>Vanessa Swerts</b>
+          <b>Winicius Sabino</b>
         </sub>
       </a>
     </td>
   </tr>
 </table>
 
-## ⛩ Seja um dos contribuidores<br>
 
-Quer fazer parte desse projeto? Clique [AQUI](CONTRIBUTING.md) e leia como contribuir.<br>
 
 ## ⚖ Licença
 
