@@ -17,21 +17,21 @@ Instalar as bibliotecas:
 $pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org -r requirements.txt
 ```
 
-## 🌈 Contribuidores<br>
+## Contribuidores<br>
 
 <table>
   <tr>
     <td align="center">
-      <a href="#">
-        <img src="https://avatars3.githubusercontent.com/u/31936044" width="100px;" alt="Foto do Caio Hatanaka"/><br>
+      <a href="https://github.com/cmhatanaka">
+        <img src="https://avatars3.githubusercontent.com/u/89807070" width="100px;" alt="Foto do Caio Hatanaka"/><br>
         <sub>
           <b>Caio Matheus Hatanaka</b>
         </sub>
       </a>
     </td>
     <td align="center">
-      <a href="#">
-        <img src="https://avatars1.githubusercontent.com/u/43486606" width="100px;" alt="Foto do Winicius Sabino"/><br>
+      <a href="https://github.com/winiciussabino">
+        <img src="https://avatars1.githubusercontent.com/u/78553616" width="100px;" alt="Foto do Winicius Sabino"/><br>
         <sub>
           <b>Winicius Sabino</b>
         </sub>
@@ -44,10 +44,8 @@ $pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org -r re
 
 ## ⚖ Licença
 
-Esse projeto está sob licença. Veja o arquivo [LICENÇA](LICENSE.md) para mais detalhes.<br>
+
 
 ## ℹ️ Informações do projeto
 
-![GitHub Repo stars](https://img.shields.io/github/stars/iuricode/README-template?style=for-the-badge)
-![GitHub watchers](https://img.shields.io/github/watchers/iuricode/README-template?style=for-the-badge)
-![GitHub forks](https://img.shields.io/github/forks/iuricode/README-template?style=for-the-badge)
+
