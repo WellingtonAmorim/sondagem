@@ -123,6 +123,6 @@ df3['Copia'] = df3['Copia'].str.strip()
 
 df3.loc[df3['ID'].isin(df4['ID'].values), 'Check'] = 'OK'
 
-df3.to_csv('Contatos_SIC.txt', sep=',', index=False, header=False)
+df3.to_csv('arquivos/Contatos_SIC.txt', sep=',', index=False, header=False)
 
 print('Atualização de contatos de SIC terminado.')
