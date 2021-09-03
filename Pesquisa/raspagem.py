@@ -88,6 +88,8 @@ def get_respondentes(url, base_empresas):
 
         empresas.to_csv('bases/Contatos_SI.txt', sep=',', index=False, header=False)
 
+        empresas.columns = ['name', 'code', 'email', 'copy', 'check']
+
         print('Atualização de contatos de SI terminado.')
 
         empresas_respostas = [empresas, numero_respostas]

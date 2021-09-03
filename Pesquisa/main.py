@@ -4,20 +4,15 @@
 #
 #
 #
-# Retorna uma lista contendo:
-#   0: um DataFrame com todas as empresas que participam da pesquisa
-#      discriminando as que responderam e as que ainda faltam
-#      responder.
-#   1: O número de respondentes encontrado.
-#
 # To do:
+#   - implementar envio de email
 #   - Tratamento de erros;
-#   - Arquivo de log
+#   - implementação de log
 #   - implementar envio de log no email
+#   - implementar atualização das url's automaticamente
 
 
 import raspagem
-
 
 def main():
     url_si = "https://enquetes.sphinxnaweb.com/cnipesquisa/SI_ago_2021/relat%C3%B3rio.htm"
@@ -33,6 +28,10 @@ def main():
         print(f'Empresas da Sondagem da Construção: {empresas_sic[0]}')
         print(f'Número de respondentes da Sondagem Industrial: {empresas_si[1]}')
         print(f'Número de respondentes da Sondagem da Construção: {empresas_sic[1]}')
+
+        empresas_si[0].to_csv('Contatos_SI.txt', sep=',', index=False)
+        empresas_sic[0].to_csv('Contatos_SI.txt', sep=',', index=False)
+
     except Exception as ex:
         print(ex)
         print("erro")

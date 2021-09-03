@@ -1,72 +1,79 @@
-import time
-start_time = time.time()
+#
+#                             FIEMT
+#
+# To do:
+#   - implementar caso o data frame recebido esteja vazio
+#   - Ocultar Email e senha
+#   - Arquivo de log
+#   - verificar alternativas para o webdriver()
 
-# Ler contatos
-def get_contacts(sondagem):
-    names = []
-    codes = []
-    emails = []
-    copys = []
-    checks = []
-    with open(sondagem, mode='r', encoding='utf-8') as contacts_file:
-        for a_contact in contacts_file:
-            names.append(a_contact.split(",")[0])
-            codes.append(a_contact.split(",")[1])
-            emails.append(a_contact.split(",")[2])
-            copys.append(a_contact.split(",")[3])
-            checks.append(a_contact.split(",")[4])
-    return names, codes, emails, copys, checks
-
-#Ler mensagem html
+import smtplib
 from string import Template
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+import pandas as pd
+import numpy as np
+
 
 def read_template(mensagem_si):
-    with open(mensagem_si, 'r') as template_file:
+    with open(mensagem_si, 'r', encoding='utf-8') as template_file:
         template_file_content = template_file.read()
     return Template(template_file_content)
 
-# import the smtplib module. It should be included in Python by default
-import smtplib
+def envia_email_pesquisa(lista_empresas,assunto,layout_menssagem):
+    message_template = read_template(layout_menssagem)
+    for index, row in lista_empresas.iterrows():
+        try:
+            print(row['check'])
+            print(row['copy'])
+            # set up the SMTP server
+            CAIO_USER = 'caio.hatanaka@fiemt.ind.br'
+            CAIO_PASS = 'Hatanaka100!'
+            s = smtplib.SMTP(host='smtp-mail.outlook.com', port=587)
+            s.starttls()
+            s.login(CAIO_USER, CAIO_PASS)
+            if (row['check'] == "OK"):
+                continue
 
-names, codes, emails, copys, checks = get_contacts('C:/Users/caio.hatanaka/PycharmProjects/pythonProject/Contatos_SI.txt')  # read contacts
-message_template = read_template('mensagem_si.html')
+            msg = MIMEMultipart()  # create a message
 
-# import necessary packages
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
+            # add in the actual person name to the message template
+            mensagem_si = message_template.substitute(NAME=row['name'], CODE=row['code'])
 
-# For each contact, send the email:
-for name, code, email, copy, check in zip(names, codes, emails, copys, checks):
-    # set up the SMTP server
-    CAIO_USER = 'caio.hatanaka@fiemt.ind.br'
-    CAIO_PASS = 'Hatanaka100!'
-    s = smtplib.SMTP(host='smtp-mail.outlook.com', port=587)
-    s.starttls()
-    s.login(CAIO_USER, CAIO_PASS)
-    if ("OK" in check):
-        continue
+            # setup the parameters of the message
+            msg['From'] = CAIO_USER
+            msg['To'] = row['email']
+            msg['Cc'] = row['copy']
+            msg['Subject'] = assunto
 
-    msg = MIMEMultipart()  # create a message
+            # add in the message body
+            msg.attach(MIMEText(mensagem_si, 'html'))
+            print(row['name'])
+            print(row['code'])
+            # send the message via the server set up earlier.
+            s.send_message(msg)
 
-    # add in the actual person name to the message template
-    mensagem_si = message_template.substitute(NAME=name.title(), CODE=code.title())
+            del msg
+            s.quit()
+            print('Todos os emails do SI foram enviados')
 
-    # setup the parameters of the message
-    msg['From'] = CAIO_USER
-    msg['To'] = email
-    msg['Cc'] = copy
-    msg['Subject'] = "Sondagem Industrial - Jul/2021"
+        except Exception as ex:
+            print(ex)
+            cod = row['code']
+            name = row['name']
+            print(f'Deu ruim no {cod, name}')
 
-    # add in the message body
-    msg.attach(MIMEText(mensagem_si, 'html'))
-    print(name.title())
-    print(code.title())
-    # send the message via the server set up earlier.
-    s.send_message(msg)
 
-    del msg
-    s.quit()
 
-print('Todos os emails do SI foram enviados')
+df = pd.read_csv('bases/Contatos_SI.txt')
+df = df.replace(np.nan, '', regex=True)
 
-print("--- %s seconds ---" % (time.time() - start_time))
+print("lendo mensagem")
+message_template = read_template('mensagens/mensagem_si.html')
+print("mensagem lida")
+print(df)
+
+assunto_email = "Sondagem Industrial - Jul/2021"
+envia_email_pesquisa(df,assunto_email,)
+
+
