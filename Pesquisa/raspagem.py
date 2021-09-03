@@ -1,3 +1,22 @@
+#
+#                             FIEMT
+#
+# Esse classe tem o objetivo de buscar os respondentes das pesquisas
+# da Sondagem Industrial e Sondagem Industrial da Construção no site
+# da CNI.
+# Verifica quais empresas ainda não responderam.
+#
+# Retorna uma lista contendo:
+#   0: um DataFrame com todas as empresas que participam da pesquisa
+#      discriminando as que responderam e as que ainda faltam
+#      responder.
+#   1: O número de respondentes encontrado.
+#
+# To do:
+#   - Tratamento de erros;
+#   - Arquivo de log
+#   - verificar alternativas para o webdriver()
+
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import pandas as pd
@@ -19,110 +38,62 @@ def espera_tabela_carregar(driver, timeout_second=60):
                 print('Esperando tabela carregar (1)....')
                 sleep(1)
 
-        except:
+        except Exception as ex:
+            print(ex)
             print('Esperando tabela carregar (2)....')
             sleep(1)
             pass
 
     return False
 
-driver = webdriver.Chrome()
-driver.get("https://enquetes.sphinxnaweb.com/cnipesquisa/SI_ago_2021/relat%C3%B3rio.htm")
 
-element = driver.find_element_by_xpath('//*[@id="txtlogin"]')
-element.send_keys("FIEMT")
-element = driver.find_element_by_xpath('//*[@id="txtSurvey"]')
-element.send_keys("44646MT", Keys.ENTER)
+def get_respondentes(url, base_empresas):
+    print('Iniciando busca por respondentes')
+    try:
+        driver = webdriver.Chrome()
+        driver.get(url)
 
-iframe = driver.find_element_by_xpath('//iframe')
-driver.switch_to.frame(iframe)
+        element = driver.find_element_by_xpath('//*[@id="txtlogin"]')
+        element.send_keys("FIEMT")
+        element = driver.find_element_by_xpath('//*[@id="txtSurvey"]')
+        element.send_keys("44646MT", Keys.ENTER)
 
-if espera_tabela_carregar(driver) is True:
+        iframe = driver.find_element_by_xpath('//iframe')
+        driver.switch_to.frame(iframe)
+        codes_list_si = []
 
-    xpath_expression = '//tr/td[1]'
-    selenium_codes = driver.find_elements_by_xpath(xpath_expression)
-    codes_list_SI = []
-    for id in selenium_codes:
-        codes_list_SI.append(id.text)
-        print(id.text)
-else:
-    print('Houve um erro ao carregar a tabela')
+        if espera_tabela_carregar(driver) is True:
+            xpath_expression = '//tr/td[1]'
+            selenium_codes = driver.find_elements_by_xpath(xpath_expression)
 
-dict = {'ID': codes_list_SI}
-df = pd.DataFrame(dict)
-df.to_excel('temp/Selenium_codes_SI.xlsx')
+            for id_pesquisa in selenium_codes:
+                codes_list_si.append(id_pesquisa.text)
+                print(id_pesquisa.text)
+        else:
+            print('Houve um erro ao carregar a tabela')
 
-driver.close()
+        dict_id = {'ID': codes_list_si}
 
-df1 = pd.read_excel('SI.xlsx')
-df2 = pd.read_excel('temp/Selenium_codes_SI.xlsx')
+        cod_respondente = pd.DataFrame(dict_id)
 
-df1['Copia'] = df1['Copia'].str.strip()
+        driver.close()
 
-df1.loc[df1['ID'].isin(df2['ID'].values ), 'Check'] = 'OK'
+        numero_respostas = cod_respondente.shape[0]
 
-df1.to_csv('Contatos_SI.txt', sep=',', index=False, header=False)
+        empresas = pd.read_excel(base_empresas)
 
-print('Atualização de contatos de SI terminado.')
+        empresas['Copia'] = empresas['Copia'].str.strip()
 
+        empresas.loc[empresas['ID'].isin(cod_respondente['ID'].values), 'Check'] = 'OK'
 
+        empresas.to_csv('bases/Contatos_SI.txt', sep=',', index=False, header=False)
 
-#def espera_tabela_carregar(driver, timeout_second=60):
-#    print('Iniciando o processo de espera da tabela')
-#    first_time = time.time()
-#    xpath_expression = '//tr/td[1]'
-#    while time.time() - first_time <= timeout_second:
-#
-#        try:
-#            elements = driver.find_elements_by_xpath(xpath_expression)
-#            if len(elements) > 1:
-#                return True
-#            else:
-#                print('Esperando tabela carregar (1)....')
-#                sleep(1)
-#
-#        except:
-#            print('Esperando tabela carregar (2)....')
-#            sleep(1)
-#            pass
-#
-#    return False
-#
-#driver = webdriver.Chrome()
-#driver.get("https://enquetes.sphinxnaweb.com/cnipesquisa/SIC_jul_2021/relat%C3%B3rio.htm")
-#
-#element = driver.find_element_by_xpath('//*[@id="txtlogin"]')
-#element.send_keys("FIEMT")
-#element = driver.find_element_by_xpath('//*[@id="txtSurvey"]')
-#element.send_keys("44646MT", Keys.ENTER)
-#
-#iframe = driver.find_element_by_xpath('//iframe')
-#driver.switch_to.frame(iframe)
-#
-#if espera_tabela_carregar(driver) is True:
-#
-#    xpath_expression = '//tr/td[1]'
-#    selenium_codes = driver.find_elements_by_xpath(xpath_expression)
-#    codes_list_SIC = []
-#    for id in selenium_codes:
-#        codes_list_SIC.append(id.text)
-#        print(id.text)
-#else:
-#    print('Houve um erro ao carregar a tabela')
-#
-#dict = {'ID': codes_list_SIC}
-#df = pd.DataFrame(dict)
-#df.to_excel('Selenium_codes_SIC.xlsx')
-#
-#driver.close()
-#
-#df3 = pd.read_excel('SIC.xlsx')
-#df4 = pd.read_excel('Selenium_codes_SIC.xlsx')
-#
-#df3['Copia'] = df3['Copia'].str.strip()
-#
-#df3.loc[df3['ID'].isin(df4['ID'].values), 'Check'] = 'OK'
-#
-#df3.to_csv('arquivos/Contatos_SIC.txt', sep=',', index=False, header=False)
-#
-#print('Atualização de contatos de SIC terminado.')
+        print('Atualização de contatos de SI terminado.')
+
+        empresas_respostas = [empresas, numero_respostas]
+
+        return empresas_respostas
+
+    except Exception as ex:
+        print(ex)
+        print('Erro na Busca por respondentes')
