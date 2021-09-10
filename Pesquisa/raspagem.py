@@ -13,6 +13,7 @@
 #   1: O número de respondentes encontrado.
 #
 # To do:
+#   - Try muito longo, quebrar ele em mais try's
 #   - Tratamento de erros;
 #   - Arquivo de log
 #   - verificar alternativas para o webdriver()
@@ -22,6 +23,7 @@ from selenium.webdriver.common.keys import Keys
 import pandas as pd
 import time
 from time import sleep
+import numpy as np
 
 
 def espera_tabela_carregar(driver, timeout_second=60):
@@ -50,6 +52,7 @@ def espera_tabela_carregar(driver, timeout_second=60):
 def get_respondentes(url, base_empresas):
     print('Iniciando busca por respondentes')
     try:
+
         driver = webdriver.Chrome()
         driver.get(url)
 
@@ -89,6 +92,8 @@ def get_respondentes(url, base_empresas):
         empresas.to_csv('bases/Contatos_SI.txt', sep=',', index=False, header=False)
 
         empresas.columns = ['name', 'code', 'email', 'copy', 'check']
+
+        empresas = empresas.replace(np.nan, '', regex=True)
 
         print('Atualização de contatos de SI terminado.')
 

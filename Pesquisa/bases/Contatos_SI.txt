@@ -1,4 +1,0 @@
-name,code,email,copy,check
-winicius sabino,aaa555ff,winicius.sabino@fiemt.ind.br,asdfadsf,
-winicius sabino,aaa555ff,caio.hatanaka@fiemt.ind.br,,
-
