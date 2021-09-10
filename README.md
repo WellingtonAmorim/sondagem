@@ -8,7 +8,7 @@ python 3
 Bibliotecas de python necessárias:
 * pandas
 * selenium
-
+* openpyxl
 
 ## Installation
 
