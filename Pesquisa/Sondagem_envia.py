@@ -28,7 +28,7 @@ def envia_email_pesquisa(lista_empresas,assunto,layout_menssagem):
             print(row['copy'])
             # set up the SMTP server
             CAIO_USER = 'caio.hatanaka@fiemt.ind.br'
-            CAIO_PASS = 'Hatanaka100!'
+            CAIO_PASS = '9pq@7lmZ85'
             s = smtplib.SMTP(host='smtp-mail.outlook.com', port=587)
             s.starttls()
             s.login(CAIO_USER, CAIO_PASS)

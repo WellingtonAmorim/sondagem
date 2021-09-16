@@ -10,7 +10,7 @@
 
 
 import raspagem
-import email
+import Sondagem_envia
 import numpy as np
 
 def main():
@@ -47,14 +47,14 @@ def main():
         empresas_sic[0].to_csv('Contatos_SIC.txt', sep=',', index=False)
 
         #Executa função de envio de email para sondagem industrial
-        assunto_email_si = "Sondagem Industrial - Ago/2021"
+        assunto_email_si = "Último dia!! Sondagem Industrial - Ago/2021"
         caminho_mensagem_si = "mensagens/mensagem_si.html"
-        email.envia_email_pesquisa(empresas_si[0], assunto_email_si, caminho_mensagem_si)
+        Sondagem_envia.envia_email_pesquisa(empresas_si[0], assunto_email_si, caminho_mensagem_si)
 
         #Executa função de envio de email para Construção
-        assunto_email_sic = "Sondagem Indústria da Construção - Ago/2021"
+        assunto_email_sic = "Último dia!! Sondagem Indústria da Construção - Ago/2021"
         caminho_mensagem_sic = "mensagens/mensagem_sic.html"
-        email.envia_email_pesquisa(empresas_sic[0], assunto_email_sic, caminho_mensagem_sic)
+        Sondagem_envia.envia_email_pesquisa(empresas_sic[0], assunto_email_sic, caminho_mensagem_sic)
 
 
     except Exception as ex:
