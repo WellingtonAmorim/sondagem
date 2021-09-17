@@ -3,7 +3,7 @@
 #
 # To do:
 #   - implementar caso o data frame recebido esteja vazio
-#   - Ocultar Email e senha
+#   FEITO: - Ocultar Email e senha
 #   - Arquivo de log
 #   - verificar alternativas para o webdriver()
 
@@ -11,6 +11,7 @@ import smtplib
 from string import Template
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+import yaml
 import pandas as pd
 import numpy as np
 
@@ -21,17 +22,19 @@ def read_template(mensagem_si):
     return Template(template_file_content)
 
 def envia_email_pesquisa(lista_empresas,assunto,layout_menssagem):
+    configuracao = open("../config.yaml")
+    configuracao = yaml.load(configuracao, Loader = yaml.FullLoader)
     message_template = read_template(layout_menssagem)
     for index, row in lista_empresas.iterrows():
         try:
             print(row['check'])
             print(row['copy'])
             # set up the SMTP server
-            CAIO_USER = 'caio.hatanaka@fiemt.ind.br'
-            CAIO_PASS = '9pq@7lmZ85'
+            usuario = configuracao['acesso_email']['login']
+            senha = configuracao['acesso_email']['senha']
             s = smtplib.SMTP(host='smtp-mail.outlook.com', port=587)
             s.starttls()
-            s.login(CAIO_USER, CAIO_PASS)
+            s.login(usuario, senha)
             if (row['check'] == "OK"):
                 continue
 
