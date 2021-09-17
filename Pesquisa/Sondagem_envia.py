@@ -30,11 +30,11 @@ def envia_email_pesquisa(lista_empresas,assunto,layout_menssagem):
             print(row['check'])
             print(row['copy'])
             # set up the SMTP server
-            usuario = configuracao['acesso_email']['login']
-            senha = configuracao['acesso_email']['senha']
+            usuario_email = configuracao['acesso_email']['login_email']
+            senha_email = configuracao['acesso_email']['senha_email']
             s = smtplib.SMTP(host='smtp-mail.outlook.com', port=587)
             s.starttls()
-            s.login(usuario, senha)
+            s.login(usuario_email, senha_email)
             if (row['check'] == "OK"):
                 continue
 

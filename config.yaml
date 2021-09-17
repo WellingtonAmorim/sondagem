@@ -1,3 +1,3 @@
 acesso_email:
-  login: usuario
-  senha: senha
+  login_email: usuario_do_email
+  senha_email: senha_do_email
