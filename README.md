@@ -9,6 +9,7 @@ Bibliotecas de python necessárias:
 * pandas
 * selenium
 * openpyxl
+* pyyaml
 
 ## Installation
 
